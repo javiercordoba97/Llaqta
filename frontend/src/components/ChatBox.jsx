@@ -7,12 +7,11 @@ export default function ChatBox() {
   const [messages, setMessages] = useState([]);
 
   // Saludo inicial del bot
-  useEffect(() => {
-    setMessages([
-      { from: "bot", text: "Hola, soy NutriBot ¿en qué te puedo ayudar? 😊" }
-    ]);
-  }, []);
-
+useEffect(() => {
+  setMessages([
+    { from: "bot", text: "Hola, soy LlaqtaBot ¿en qué te puedo ayudar? 😊" }
+  ]);
+}, []);
   const handleSend = async (text) => {
     // Mostrar mensaje del usuario
     setMessages((prev) => [...prev, { from: "user", text }]);

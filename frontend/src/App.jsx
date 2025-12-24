@@ -1,12 +1,19 @@
 import ChatBox from "./components/ChatBox";
-import "./styles.css";
+import Home from "../Home";
+import { useState } from "react";
 
-function App() {
+export default function App() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="app-container">
-      <ChatBox />
-    </div>
+    <>
+      <Home />
+
+      <div className="chat-bubble" onClick={() => setOpen(!open)}>
+        💬
+      </div>
+
+      {open && <ChatBox />}
+    </>
   );
 }
-
-export default App;
