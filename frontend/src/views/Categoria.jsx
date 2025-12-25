@@ -1,29 +1,52 @@
 import { useParams, Link } from "react-router-dom";
-import "./../styles/App.css";
+import { useEffect, useState } from "react";
+import "../styles/App.css";
 
 export default function Categoria() {
   const { categoria } = useParams();
+  const [productos, setProductos] = useState([]);
 
-  const products = [
-    { id: 1, nombre: "Poncho de lana artesanal", precio: 45000, categoria: "ponchos" },
-    { id: 2, nombre: "Camisa gaucha blanca", precio: 28000, categoria: "camisas" },
-    { id: 3, nombre: "Bombacha de campo marrón", precio: 32000, categoria: "pantalones" }
-  ];
+  useEffect(() => {
+    fetch("http://localhost:8000/productos")
+      .then(res => res.json())
+      .then(data => setProductos(data))
+      .catch(() => setProductos([]));
+  }, []);
 
-  const filtered = products.filter(p => p.categoria === categoria);
+  const filtered = productos.filter(p => p.categoria === categoria);
+
+  const getImage = (file) =>
+    new URL(`../assets/img/${file}`, import.meta.url).href;
 
   return (
     <div className="category-page">
-      <h1>Categoría: {categoria}</h1>
+
+      <h1 style={{ textTransform: "capitalize" }}>
+        {categoria}
+      </h1>
+
+      {filtered.length === 0 && (
+        <p>No hay productos en esta categoría.</p>
+      )}
 
       <div className="product-grid">
         {filtered.map(p => (
-          <Link key={p.id} to={`/producto/${p.id}`} className="product-card">
+          <Link
+            key={p.id}
+            to={`/producto/${p.id}`}
+            className="product-card"
+          >
+            <img
+              src={getImage(p.imagen)}
+              alt={p.nombre}
+              className="product-image"
+            />
             <h3>{p.nombre}</h3>
             <p>${p.precio}</p>
           </Link>
         ))}
       </div>
+
     </div>
   );
 }

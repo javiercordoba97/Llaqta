@@ -15,9 +15,20 @@ def generate_llm_response(user_message: str):
         "Content-Type": "application/json"
     }
 
+    # --- SYSTEM PROMPT MEJORADO ---
+    system_prompt = """
+    Sos LlaqtaBot, asistente oficial de Llaqta, una tienda argentina de ropa de campo.
+    Tu estilo es amable, claro y directo.
+    No inventes productos ni información.
+    Si no sabés algo, pedí más detalles.
+    Respondé SIEMPRE en texto plano, sin JSON, sin listas numeradas a menos que el usuario lo pida.
+    Usá un tono natural, argentino y profesional.
+    """
+
     payload = {
         "model": settings.DEFAULT_LLM_MODEL,
         "messages": [
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message}
         ]
     }

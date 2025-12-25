@@ -1,25 +1,39 @@
 import { useParams } from "react-router-dom";
-import "./../styles/App.css";
+import { useEffect, useState } from "react";
+import "../styles/App.css";
 
 export default function Producto() {
   const { id } = useParams();
+  const [producto, setProducto] = useState(null);
 
-  const products = [
-    { id: 1, nombre: "Poncho de lana artesanal", precio: 45000, talles: ["Único"], stock: 8 },
-    { id: 2, nombre: "Camisa gaucha blanca", precio: 28000, talles: ["S", "M", "L", "XL"], stock: 15 },
-    { id: 3, nombre: "Bombacha de campo marrón", precio: 32000, talles: ["38", "40", "42", "44", "46"], stock: 10 }
-  ];
+  useEffect(() => {
+    fetch("http://localhost:8000/productos")
+      .then(res => res.json())
+      .then(data => {
+        const found = data.find(p => p.id === Number(id));
+        setProducto(found || null);
+      })
+      .catch(() => setProducto(null));
+  }, [id]);
 
-  const product = products.find(p => p.id === Number(id));
+  const getImage = (file) =>
+    new URL(`../assets/img/${file}`, import.meta.url).href;
 
-  if (!product) return <h2>Producto no encontrado</h2>;
+  if (!producto) return <h2>Producto no encontrado</h2>;
 
   return (
     <div className="product-page">
-      <h1>{product.nombre}</h1>
-      <p><strong>Precio:</strong> ${product.precio}</p>
-      <p><strong>Talles:</strong> {product.talles.join(", ")}</p>
-      <p><strong>Stock:</strong> {product.stock} unidades</p>
+      <h1>{producto.nombre}</h1>
+
+      <img
+        src={getImage(producto.imagen)}
+        alt={producto.nombre}
+        className="product-image-large"
+      />
+
+      <p><strong>Precio:</strong> ${producto.precio}</p>
+      <p><strong>Talles:</strong> {producto.talles.join(", ")}</p>
+      <p><strong>Stock:</strong> {producto.stock} unidades</p>
 
       <button
         className="chat-button"

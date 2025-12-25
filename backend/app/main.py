@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers.chat import router as chat_router
+from app.data.store_data import PRODUCTS
 
 app = FastAPI()
 
@@ -14,3 +15,7 @@ app.add_middleware(
 )
 
 app.include_router(chat_router, prefix="/chat")
+
+@app.get("/productos")
+def get_productos():
+    return PRODUCTS

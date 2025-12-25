@@ -11,7 +11,7 @@ export default function Footer() {
       <div>
         <h4>Contacto</h4>
         <p>WhatsApp: +54 9 11 1234 5678</p>
-        <p>Email: contacto@llaqta.com</p>
+        <p>Email: atencion@latranquera.com</p>
       </div>
 
       <div>

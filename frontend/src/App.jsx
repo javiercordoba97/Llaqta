@@ -8,6 +8,8 @@ import SidebarCategorias from "./components/SidebarCategorias";
 import Footer from "./components/Footer";
 import ChatBubble from "./components/ChatBubble";
 
+import "./styles/App.css";
+
 export default function App() {
   return (
     <div className="app-layout">
@@ -16,7 +18,7 @@ export default function App() {
       <Header />
 
       <div className="content-layout">
-        {/* SIDEBAR FIJA */}
+        {/* SIDEBAR */}
         <SidebarCategorias />
 
         {/* CONTENIDO PRINCIPAL */}
@@ -32,7 +34,7 @@ export default function App() {
       {/* FOOTER */}
       <Footer />
 
-      {/* CHATBOT COMO BURBUJA */}
+      {/* CHAT */}
       <ChatBubble />
     </div>
   );
